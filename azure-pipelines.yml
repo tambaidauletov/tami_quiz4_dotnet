@@ -8,16 +8,16 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '8.0.x'
+    version: '7.0.x'
 
-- script: dotnet build
+- script: dotnet restore WebApp/WebApp.sln
+  displayName: 'Restore packages'
+
+- script: dotnet build WebApp/WebApp.sln --configuration Release
   displayName: 'Build project'
 
-- script: dotnet pack --output $(Build.ArtifactStagingDirectory)
-  displayName: 'Pack NuGet package'
-
-- task: NuGetCommand@2
+- task: PublishBuildArtifacts@1
   inputs:
-    command: 'push'
-    publishVstsFeed: 'lab4301273006'  # Убедись, что имя feed совпадает
-    allowPackageConflicts: true
+    PathtoPublish: 'WebApp/bin/Release/net7.0'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
