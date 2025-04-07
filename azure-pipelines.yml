@@ -10,11 +10,14 @@ steps:
     packageType: 'sdk'
     version: '8.0.x'
 
-- script: dotnet restore WebApp/WebApp.sln
+- script: dotnet restore WebApp/WebApp.csproj
   displayName: 'Restore packages'
 
-- script: dotnet build WebApp/WebApp.sln --configuration Release
+- script: dotnet build WebApp/WebApp.csproj -c Release --no-restore
   displayName: 'Build project'
+
+- script: dotnet pack WebApp/WebApp.csproj -c Release -o $(Build.ArtifactStagingDirectory)
+  displayName: 'Pack NuGet package'
 
 - task: PublishBuildArtifacts@1
   inputs:
