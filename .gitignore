@@ -1,3 +1,22 @@
-.vs/
+# Build results
 bin/
 obj/
+*.dll
+*.exe
+
+# User-specific files
+*.user
+*.suo
+
+# Visual Studio
+.vs/
+
+# Rider
+.idea/
+
+# ASP.NET
+wwwroot/
+
+# Other
+*.log
+*.vsidx
