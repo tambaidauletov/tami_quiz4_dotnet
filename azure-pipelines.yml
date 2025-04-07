@@ -1,0 +1,23 @@
+trigger:
+- main
+
+pool:
+  name: Default
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.x'
+
+- script: dotnet build
+  displayName: 'Build project'
+
+- script: dotnet pack --output $(Build.ArtifactStagingDirectory)
+  displayName: 'Pack NuGet package'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    publishVstsFeed: 'lab4301273006'  # Убедись, что имя feed совпадает
+    allowPackageConflicts: true
